@@ -1,0 +1,10 @@
+[project]
+name = "tiny-erp"
+version = "0.1.0"
+description = "Tiny ERP system with Gradio UI"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gradio>=5.0.0",
+    "pytest>=8.0.0"
+]
