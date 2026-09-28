@@ -1,0 +1,40 @@
+code_task:
+  description: >
+    Implement the backend exactly as specified in the engineering lead's design (file layout,
+    module/class/function signatures). Requirements: {requirements}
+  expected_output: >
+    Python files written to the sandbox, matching the design's structure and signatures,
+    verified to run without errors using your sandbox tools.
+  agent: backend_engineer
+
+ui_task:
+  description: >
+    Build the Gradio UI specified in the design, demonstrating the backend module. Treat this
+    as production UI for thousands of real users - professional, polished, clean, not a demo
+    throwaway. Follow the engineering lead's current-Gradio-API guidance precisely.
+    Then write a separate validation script that imports and instantiates the Blocks object to
+    confirm it constructs without error, and run it with your sandbox tools.
+    IMPORTANT: the validation script must NOT call `.launch()` - that would block until timeout.
+    Requirements: {requirements}
+  expected_output: >
+    A single-file Gradio UI in the same sandbox directory as the backend, ready to run as-is,
+    plus a validation script confirming it constructs without error.
+  agent: frontend_engineer
+  context:
+    - code_task
+
+testing_task:
+  description: >
+    Write unit tests for the backend module, in test file(s), using the testing framework specified
+    in the engineering lead's design. Run them with your sandbox tools until all pass.
+    Before changing any backend code, check what the UI file imports/depends on from the
+    backend, so your fixes don't break it. Keep changes minimal and note any interface changes
+    in your summary.
+  expected_output: >
+    A single test file that runs and passes, plus a written summary of results (and any backend
+    changes made and why) in the testing report.
+  agent: testing_engineer
+  context:
+    - code_task
+    - ui_task
+  output_file: mnt/testing_report.md
